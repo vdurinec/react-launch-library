@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import Link from 'next/link';
 
 import styles from '../../styles/Day.module.css';
 
