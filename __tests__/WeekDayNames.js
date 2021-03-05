@@ -3,7 +3,7 @@ import WeekDayNames from '../components/week-day-names';
 
 describe('WeekDayNames', () => {
   test('renders without crashing', () => {
-    const { container } = render(<WeekDayNames testId="test-week-day-names" />);
+    render(<WeekDayNames testId="test-week-day-names" />);
 
     expect(screen.getByTestId('test-week-day-names')).toHaveTextContent('Mon');
     expect(screen.getByTestId('test-week-day-names')).toHaveTextContent('Tue');
