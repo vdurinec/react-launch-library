@@ -8,6 +8,7 @@ import {
   getMonthFromNum,
   getYear,
   getDaysInMonth,
+  getWeeksWithDays,
 } from '../helpers/dateUtils';
 
 describe('date utils', () => {
@@ -98,5 +99,29 @@ describe('date utils', () => {
     expect(getDaysInMonth(3, 2021)).toBe(31);
     expect(getDaysInMonth(6, 2021)).toBe(30);
     expect(getDaysInMonth(12, 2021)).toBe(31);
+  });
+
+  test('getWeeksWithDays returns correct days in week', () => {
+    expect(getWeeksWithDays(0, 15)).toStrictEqual([
+      [1, 2, 3, 4, 5, 6, 7],
+      [8, 9, 10, 11, 12, 13, 14],
+      [15],
+    ]);
+
+    expect(getWeeksWithDays(1, 13)).toStrictEqual([
+      [0, 1, 2, 3, 4, 5, 6],
+      [7, 8, 9, 10, 11, 12],
+    ]);
+
+    expect(getWeeksWithDays(2, 12)).toStrictEqual([
+      [0, 0, 1, 2, 3, 4, 5],
+      [6, 7, 8, 9, 10],
+    ]);
+
+    expect(getWeeksWithDays(6, 18)).toStrictEqual([
+      [0, 0, 0, 0, 0, 0, 1],
+      [2, 3, 4, 5, 6, 7, 8],
+      [9, 10, 11, 12],
+    ]);
   });
 });

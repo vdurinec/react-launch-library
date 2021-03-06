@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import fetch from 'node-fetch';
 import Head from 'next/head';
 
 import Select from '../components/select';
-import Year from '../components/year';
+import Calendar from '../components/calendar';
 import styles from '../styles/Home.module.css';
 
 const Home = ({ agencies, error }) => {
   const [agenciesData, setAgenciesData] = useState(agencies);
   const [errorText, setErrorText] = useState(error);
   const [selectedAgencies, setSelectedAgencies] = useState([]);
-  // const [selectedAgencies, setSelectedAgencies] = useState([5, 271]);
 
   /* TODO: remove later */
   useEffect(() => {
@@ -52,17 +52,19 @@ const Home = ({ agencies, error }) => {
 
   console.log('agenciesData', agenciesData);
 
-  const agencyOptions = agenciesData.reduce(
-    (options, currentAgency) => [
-      ...options,
-      {
-        id: currentAgency.id,
-        value: currentAgency.id,
-        text: currentAgency.name,
-      },
-    ],
-    []
-  );
+  const agencyOptions = agenciesData?.length
+    ? agenciesData.reduce(
+        (options, currentAgency) => [
+          ...options,
+          {
+            id: currentAgency.id,
+            value: currentAgency.id,
+            text: currentAgency.name,
+          },
+        ],
+        []
+      )
+    : [];
 
   console.log('agencyOptions', agencyOptions);
   return (
@@ -87,7 +89,7 @@ const Home = ({ agencies, error }) => {
           handleChange={handleAgencySelection}
           multiple
         />
-        <Year />
+        <Calendar />
       </main>
 
       <footer className={styles.footer}>© 2021</footer>
@@ -110,6 +112,11 @@ Home.propTypes = {
   agencies: PropTypes.array.isRequired,
   error: PropTypes.string,
   testId: PropTypes.string,
+};
+
+Home.defaultProps = {
+  agencies: [],
+  error: '',
 };
 
 export default Home;

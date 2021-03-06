@@ -1,53 +1,21 @@
-import { Fragment, useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 import {
   getDayIndex,
-  getMonth,
-  getMonthFromNum,
   getDaysInMonth,
-  getYear,
+  getWeeksWithDays,
 } from '../../helpers/dateUtils';
-import MonthHeader from '../month-header';
 import WeekDayNames from '../week-day-names';
 import Week from '../week';
 import styles from '../../styles/Month.module.css';
 
-export default function Month() {
-  const [currentMonth, setCurrentMonth] = useState(getMonth());
-  const [currentYear, setCurrentYear] = useState(getYear());
-  const [month, setMonth] = useState(currentMonth.number);
-  const firstDayIndex = getDayIndex(`${month}-01-${currentYear}`);
-  const totalMonthDays =
-    getDaysInMonth(currentMonth.number, currentYear) + firstDayIndex;
-  const monthDays = Array.from({ length: totalMonthDays });
-
-  useEffect(() => setCurrentMonth(getMonthFromNum(month)), [month]);
-
-  const weeks = monthDays.reduce((days, item, index) => {
-    const day = Math.floor(index / 7);
-
-    if (!days[day]) {
-      days[day] = []; // start a new week
-    }
-
-    if (index < firstDayIndex) {
-      days[day].push(0);
-      return days;
-    }
-    const dayItem = index + 1 - firstDayIndex;
-
-    days[day].push(dayItem);
-
-    return days;
-  }, []);
+export default function Month({ month, year }) {
+  const firstDayIndex = getDayIndex(`${month}-01-${year}`);
+  const totalMonthDays = getDaysInMonth(month, year) + firstDayIndex;
+  const weeks = getWeeksWithDays(firstDayIndex, totalMonthDays);
 
   return (
-    <div className={styles.container}>
-      <MonthHeader
-        month={currentMonth}
-        changeMonth={setMonth}
-        changeYear={setCurrentYear}
-      />
+    <div className={styles.container} data-testid="test-month">
       <WeekDayNames />
       <div className={styles.main}>
         {weeks.map((week, index) => (
@@ -61,3 +29,8 @@ export default function Month() {
     </div>
   );
 }
+
+Month.propTypes = {
+  month: PropTypes.number.isRequired,
+  year: PropTypes.number.isRequired,
+};

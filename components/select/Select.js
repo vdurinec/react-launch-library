@@ -88,20 +88,21 @@ const Select = (props) => {
           aria-hidden={!open}
           data-testid={'test-options'}
         >
-          {options.map((option) => (
-            <button
-              type="button"
-              className={`${styles.option} ${
-                isSelected(option.id) && styles.selected
-              }`}
-              key={option.id}
-              onClick={handleSelect(option)}
-              data-testid={option.id}
-              role="option"
-            >
-              {option.text}
-            </button>
-          ))}
+          {!!options.length &&
+            options.map((option) => (
+              <button
+                type="button"
+                className={`${styles.option} ${
+                  isSelected(option.id) && styles.selected
+                }`}
+                key={option.id}
+                onClick={handleSelect(option)}
+                data-testid={option.id}
+                role="option"
+              >
+                {option.text}
+              </button>
+            ))}
         </div>
       </div>
     </div>

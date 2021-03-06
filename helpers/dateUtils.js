@@ -68,3 +68,24 @@ export const getYear = (date) =>
 
 export const getDaysInMonth = (month, year) =>
   new Date(year, month, 0).getDate();
+
+export const getWeeksWithDays = (firstDayIndex, totalMonthDays) => {
+  const monthDays = Array.from({ length: totalMonthDays });
+  return monthDays.reduce((days, item, index) => {
+    const day = Math.floor(index / 7);
+
+    if (!days[day]) {
+      days[day] = []; // start a new week
+    }
+
+    if (index < firstDayIndex) {
+      days[day].push(0); // push "empty" days for first week
+      return days;
+    }
+    const dayItem = index + 1 - firstDayIndex;
+
+    days[day].push(dayItem);
+
+    return days;
+  }, []);
+};
