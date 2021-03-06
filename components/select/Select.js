@@ -21,7 +21,7 @@ const Select = (props) => {
 
   useEffect(() => {
     if (open && isClickedOutside) setOpen(false);
-  }, [isClickedOutside]);
+  }, [open, isClickedOutside]);
 
   const isSelected = (option) => {
     return multiple ? !!value?.includes(option) : value === option;
@@ -54,9 +54,9 @@ const Select = (props) => {
 
   return (
     <div
-      className={styles.container}
+      className={`${styles.container} ${className || ''}`}
       ref={container}
-      id="select-container"
+      id={id}
       aria-labelledby="select-value"
       aria-describedby="select-options"
       data-testid={testId}

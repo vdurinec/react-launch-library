@@ -1,15 +1,9 @@
-import { Fragment, useState, useEffect } from 'react';
+import { useState } from 'react';
 
-import {
-  getDayIndex,
-  getMonth,
-  getMonthFromNum,
-  getDaysInMonth,
-  getYear,
-} from '../../helpers/dateUtils';
+import { getMonth, getMonthFromNum, getYear } from '../../helpers/dateUtils';
 import CalendarHeader from '../calendar-header';
 import Month from '../month';
-import { OPERATIONS, OPERATORS } from '../../helpers/general';
+import { OPERATORS } from '../../helpers/general';
 import styles from '../../styles/Calendar.module.css';
 
 export default function Calendar() {

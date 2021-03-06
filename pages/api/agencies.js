@@ -107,7 +107,7 @@ export default async (req, res) => {
       country_code: 'FRA',
       abbrev: 'ASA',
       description:
-        "Arianespace SA is a multinational company founded in 1980 as the world's first commercial launch service provider. It undertakes the production, operation, and marketing of the Ariane programme. Their vehicles launch exclusively from French Guiana in South America.",
+        'Arianespace SA is a multinational company founded in 1980 as the world\'s first commercial launch service provider. It undertakes the production, operation, and marketing of the Ariane programme. Their vehicles launch exclusively from French Guiana in South America.',
       administrator: 'CEO: Stéphane Israël',
       founding_year: '1980',
       launchers: 'Ariane 5 | Vega',
