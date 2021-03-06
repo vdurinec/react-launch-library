@@ -1,11 +1,11 @@
 export const week = [
-  'Sunday',
   'Monday',
   'Tuesday',
   'Wednesday',
   'Thursday',
   'Friday',
   'Saturday',
+  'Sunday',
 ];
 
 export const months = [
@@ -23,16 +23,25 @@ export const months = [
   'December',
 ];
 
-export const getDay = (date) => {
+export const getDayIndex = (date) => {
   let day;
 
   if (date) {
     day = new Date(date);
-    return week[day.getDay()];
+    const dayIndex = day.getDay();
+    if (dayIndex === 0) return 6;
+
+    return dayIndex - 1;
   }
 
   day = new Date();
-  return week[day.getUTCDay()];
+  return day.getUTCDay();
+};
+
+export const getDay = (date) => {
+  const day = getDayIndex(date);
+
+  return week[day];
 };
 
 export const getMonthFromNum = (month) => {

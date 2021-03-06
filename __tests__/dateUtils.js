@@ -3,6 +3,7 @@ import {
   week,
   months,
   getDay,
+  getDayIndex,
   getMonth,
   getMonthFromNum,
   getYear,
@@ -26,6 +27,16 @@ describe('date utils', () => {
     expect(getDay('03-05-2021')).toBe('Friday');
     expect(getDay('05-22-2021')).toBe('Saturday');
     expect(getDay('12-26-2021')).toBe('Sunday');
+  });
+
+  test('getDayIndex returns correct index for given date', () => {
+    expect(getDayIndex('12-30-2019')).toBe(0);
+    expect(getDayIndex('01-14-2020')).toBe(1);
+    expect(getDayIndex('04-29-2020')).toBe(2);
+    expect(getDayIndex('02-18-2021')).toBe(3);
+    expect(getDayIndex('03-05-2021')).toBe(4);
+    expect(getDayIndex('05-22-2021')).toBe(5);
+    expect(getDayIndex('12-26-2021')).toBe(6);
   });
 
   test('getMonthFromNum returns correct month for given month number', () => {

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import styles from '../../styles/Day.module.css';
 
 export default function Day({ day, testId }) {
+  if (!day) return null;
+
   return (
     <span className={styles.container} data-testid={testId}>
       {day}

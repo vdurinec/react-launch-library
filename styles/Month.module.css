@@ -1,0 +1,20 @@
+.container {
+  min-height: 714px;
+}
+/* 
+@media (max-width: 576px) {
+  .container {
+    min-height: 240px;
+  }
+} */
+
+.main {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 768px) {
+  .container {
+    min-height: 434px;
+  }
+}

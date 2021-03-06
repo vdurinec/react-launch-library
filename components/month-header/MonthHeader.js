@@ -1,18 +1,25 @@
 import PropTypes from 'prop-types';
 
-import { getMonth } from '../../helpers/dateUtils';
-
+import { OPERATIONS, OPERATORS } from '../../helpers/general';
 import styles from '../../styles/MonthHeader.module.css';
 
-const OPERATIONS = { sub: 'sub', add: 'add' };
-const OPERATORS = { [OPERATIONS.sub]: -1, [OPERATIONS.add]: 1 };
-
-export default function MonthHeader({ month, changeMonth, testId }) {
+export default function MonthHeader(props) {
+  const { month, changeMonth, changeYear, testId } = props;
   const { number, name } = month;
 
   const handleMonthChange = (operation) => () => {
     const operator = OPERATORS[operation];
-    const newMonth = operator ? number + operator : number;
+    let newMonth = operator ? number + operator : number;
+
+    if (newMonth > 12) {
+      newMonth = newMonth - 12;
+      changeYear((currentYear) => currentYear + 1);
+    }
+
+    if (newMonth < 1) {
+      newMonth = newMonth + 12;
+      changeYear((currentYear) => currentYear - 1);
+    }
 
     changeMonth(newMonth);
   };
@@ -48,5 +55,6 @@ MonthHeader.propTypes = {
     number: PropTypes.number,
   }).isRequired,
   changeMonth: PropTypes.func.isRequired,
+  changeYear: PropTypes.func.isRequired,
   testId: PropTypes.string,
 };

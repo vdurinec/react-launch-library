@@ -11,7 +11,7 @@
   width: 44px;
   display: flex;
   justify-content: center;
-  font-size: 32px;
+  font-size: 2rem;
   user-select: none;
 }
 
@@ -25,10 +25,17 @@
 .current {
   flex-grow: 2;
   text-align: center;
-  font-size: 28px;
+  font-size: 2.5rem;
 }
 
-@media (max-width: 768px) {
-  .container {
+@media (max-width: 576px) {
+  .current {
+    font-size: 1.5rem;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+  .current {
+    font-size: 2rem;
   }
 }

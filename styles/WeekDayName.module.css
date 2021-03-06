@@ -5,16 +5,31 @@
 }
 
 .weekDay {
-  width: 102px;
+  width: 122px;
   text-align: center;
   padding: 8px 0;
 }
 
-@media (max-width: 768px) {
-  .container {
+@media (min-width: 767px) and (max-width: 1200px) {
+  .weekDay {
+    width: 102px;
   }
+}
 
+@media (min-width: 577px) and (max-width: 768px) {
   .weekDay {
     width: 62px;
+  }
+}
+
+@media (min-width: 361px) and (max-width: 576px) {
+  .weekDay {
+    width: 52px;
+  }
+}
+
+@media (max-width: 360px) {
+  .weekDay {
+    width: 42px;
   }
 }
