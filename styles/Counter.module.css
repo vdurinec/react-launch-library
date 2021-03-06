@@ -1,0 +1,48 @@
+.container {
+  display: flex;
+  margin: 0.5rem 0;
+  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
+    Bitstream Vera Sans Mono, Courier New, monospace;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+}
+
+.box {
+  display: flex;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 0.1rem;
+  font-size: 1.25rem;
+  width: 50px;
+}
+
+.item:last-of-type {
+  justify-content: center;
+}
+
+.description {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 0.25rem;
+  font-size: 1rem;
+  width: 50px;
+}
+
+.description:last-of-type {
+  justify-content: center;
+}
+
+.indicator {
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+  width: 50px;
+}

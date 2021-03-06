@@ -23,7 +23,7 @@ export default function useClickOutside(ref) {
     return () => {
       document.removeEventListener('mousedown', handleClick);
     };
-  }, []); /* Ensure (with []) it will be called on mounting only */
+  }, [ref]);
 
   return clickOutside;
 }

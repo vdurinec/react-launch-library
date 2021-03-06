@@ -1,4 +1,3 @@
-import { render, screen } from '@testing-library/react';
 import {
   week,
   months,
@@ -9,6 +8,8 @@ import {
   getYear,
   getDaysInMonth,
   getWeeksWithDays,
+  formatTimeDigits,
+  formatCounterTime,
 } from '../helpers/dateUtils';
 
 describe('date utils', () => {
@@ -123,5 +124,83 @@ describe('date utils', () => {
       [2, 3, 4, 5, 6, 7, 8],
       [9, 10, 11, 12],
     ]);
+  });
+
+  test('formatTimeDigits places 0 before single digit niumber only', () => {
+    expect(formatTimeDigits(1)).toBe('01');
+    expect(formatTimeDigits(3)).toBe('03');
+    expect(formatTimeDigits(7)).toBe('07');
+    expect(formatTimeDigits(9)).toBe('09');
+    expect(formatTimeDigits(10)).toBe(10);
+    expect(formatTimeDigits(10)).not.toBe('010');
+    expect(formatTimeDigits(25)).toBe(25);
+    expect(formatTimeDigits(25)).not.toBe('025');
+    expect(formatTimeDigits(192)).toBe(192);
+    expect(formatTimeDigits(192)).not.toBe('0192');
+  });
+
+  test('formatCounterTime returns correctly formated time', () => {
+    expect(formatCounterTime(0)).toStrictEqual({
+      days: '',
+      hours: '',
+      minutes: '',
+      seconds: '00',
+    });
+
+    expect(formatCounterTime(13234)).toStrictEqual({
+      days: '',
+      hours: '',
+      minutes: '',
+      seconds: 13,
+    });
+
+    expect(formatCounterTime(13234)).toStrictEqual({
+      days: '',
+      hours: '',
+      minutes: '',
+      seconds: 13,
+    });
+
+    expect(formatCounterTime(229323)).toStrictEqual({
+      days: '',
+      hours: '',
+      minutes: '03',
+      seconds: 49,
+    });
+
+    expect(formatCounterTime(229323)).toStrictEqual({
+      days: '',
+      hours: '',
+      minutes: '03',
+      seconds: 49,
+    });
+
+    expect(formatCounterTime(21222323)).toStrictEqual({
+      days: '',
+      hours: '05',
+      minutes: 53,
+      seconds: 42,
+    });
+
+    expect(formatCounterTime(221222323)).toStrictEqual({
+      days: '02',
+      hours: 13,
+      minutes: 27,
+      seconds: '02',
+    });
+
+    expect(formatCounterTime(687687687)).toStrictEqual({
+      days: '07',
+      hours: 23,
+      minutes: '01',
+      seconds: 27,
+    });
+
+    expect(formatCounterTime(1941222323)).toStrictEqual({
+      days: 22,
+      hours: 11,
+      minutes: 13,
+      seconds: 42,
+    });
   });
 });

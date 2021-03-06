@@ -89,3 +89,37 @@ export const getWeeksWithDays = (firstDayIndex, totalMonthDays) => {
     return days;
   }, []);
 };
+
+export const formatTimeDigits = (n) => {
+  if (n === 0) {
+    return '';
+  }
+
+  return n < 10 ? `0${n}` : n;
+};
+
+export const formatCounterTime = (milis) => {
+  let seconds = Math.floor(milis / 1000);
+  let minutes = Math.floor(seconds / 60);
+  let hours = 0;
+  let days = 0;
+
+  seconds = seconds % 60;
+
+  if (minutes > 59) {
+    hours = Math.floor(minutes / 60);
+    minutes = minutes - hours * 60;
+  }
+
+  if (hours > 24) {
+    days = Math.floor(hours / 24);
+    hours = hours - days * 24;
+  }
+
+  return {
+    days: formatTimeDigits(days),
+    hours: formatTimeDigits(hours),
+    minutes: formatTimeDigits(minutes),
+    seconds: formatTimeDigits(seconds) || '00',
+  };
+};
