@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 module.exports = {
   testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/'],
   setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
@@ -6,5 +7,6 @@ module.exports = {
   },
   moduleNameMapper: {
     '\\.(css|scss)$': 'identity-obj-proxy',
+    '\\.svg$': '<rootDir>/__mocks__/svgrMock.js',
   },
 };
