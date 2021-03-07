@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import { OPERATIONS, OPERATORS } from '../../helpers/general';
+import { OPERATIONS, OPERATORS, TIME_DEFS } from '../../helpers/general';
 import { formatCounterTime } from '../../helpers/dateUtils';
 import styles from '../../styles/Counter.module.css';
 
@@ -30,25 +30,21 @@ const Counter = ({ date, testId }) => {
       <div className={styles.indicator}>
         {operation === OPERATIONS.sub ? 'T-' : 'T+'}
       </div>
-      <div className={styles.main}>
-        <div className={styles.box}>
-          {formattedTimeArray.map(([key, value], i) => (
-            <div key={key} className={styles.item}>
+      <div className={styles.box}>
+        {formattedTimeArray.map(([key, value], i) => (
+          <div key={key} className={styles.itembox}>
+            <p className={styles.item}>
               {value &&
                 `${value} ${i + 1 < formattedTimeArray.length ? ':' : ''}`}
-            </div>
-          ))}
-        </div>
-        <div className={styles.box}>
-          {formattedTimeArray.map(([key], i) => (
-            <div key={key} className={styles.description}>
+            </p>
+            <p className={styles.description}>
               {key &&
-                `${key.substr(0, 1)} ${
+                `${TIME_DEFS[key]} ${
                   i + 1 < formattedTimeArray.length ? ':' : ''
                 }`}
-            </div>
-          ))}
-        </div>
+            </p>
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -3,46 +3,41 @@
   margin: 0.5rem 0;
   font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
     Bitstream Vera Sans Mono, Courier New, monospace;
-}
-
-.main {
-  display: flex;
-  flex-direction: column;
+  color: var(--main-text-color);
 }
 
 .box {
   display: flex;
 }
 
-.item {
+.itembox {
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  margin: 0.1rem;
-  font-size: 1.25rem;
-  width: 50px;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  width: 68px;
 }
 
-.item:last-of-type {
-  justify-content: center;
+.item {
+  margin: 0.1rem;
+  font-size: 1.25rem;
+  color: var(--main-title-color);
+}
+
+.itembox:last-of-type {
+  align-items: center;
 }
 
 .description {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
   margin-right: 0.25rem;
-  font-size: 1rem;
-  width: 50px;
-}
-
-.description:last-of-type {
-  justify-content: center;
+  font-size: 0.85rem;
+  color: var(--calendar-text-color);
 }
 
 .indicator {
   display: flex;
   align-items: center;
   font-size: 2rem;
-  width: 50px;
+  width: 38px;
+  color: var(--main-title-color);
 }
