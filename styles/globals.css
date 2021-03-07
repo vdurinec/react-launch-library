@@ -14,3 +14,26 @@ a {
 * {
   box-sizing: border-box;
 }
+
+:root {
+  --calendar-bg-color: #f1f6f7;
+  --calendar-text-color: #2a1b2d;
+}
+
+.light {
+  --main-bg-color: #f1f6f7;
+  --secondary-bg-color: #d66848;
+  --main-title-color: #8e3539;
+  --main-subtitle-color: #e37e76;
+  --main-text-color: #2a1b2d;
+  --secondary-text-color: #f1f6f7;
+}
+
+.dark {
+  --main-bg-color: #2a1b2d;
+  --secondary-bg-color: #8e3539;
+  --main-title-color: #8e3539;
+  --main-subtitle-color: #d66848;
+  --main-text-color: #f1f6f7;
+  --secondary-text-color: #f1f6f7;
+}
