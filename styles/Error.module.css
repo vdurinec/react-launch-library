@@ -1,0 +1,79 @@
+.container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.container a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.container a:hover,
+.container a:active,
+.container a:focus {
+  text-decoration: underline;
+}
+
+.container h6 {
+  font-weight: lighter;
+}
+
+.title,
+.subtitle,
+.description {
+  text-align: center;
+}
+
+.title {
+  line-height: 2;
+  font-size: 2rem;
+}
+
+.subtitle {
+  line-height: 1.75;
+  font-size: 1.75rem;
+}
+
+.description {
+  line-height: 1.5;
+  font-size: 1.5rem;
+}
+
+@media (max-width: 576px) {
+  .title {
+    line-height: 1.5;
+    font-size: 1.5rem;
+  }
+
+  .subtitle {
+    line-height: 1.25;
+    font-size: 1.25rem;
+  }
+
+  .description {
+    line-height: 1;
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+  .title {
+    line-height: 2;
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    line-height: 1.75;
+    font-size: 1.75rem;
+  }
+
+  .description {
+    line-height: 1.5;
+    font-size: 1.5rem;
+  }
+}
