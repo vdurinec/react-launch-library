@@ -1,0 +1,55 @@
+.container {
+  border: 1px solid var(--secondary-bg-color);
+  border-radius: 4px;
+  color: var(--calendar-text-color);
+  background-color: var(--calendar-bg-color);
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.detailItemContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  max-width: 300px;
+  padding: 0 0.5rem;
+}
+
+.detail {
+  padding: 0.5rem 0;
+  display: flex;
+}
+
+.title {
+  color: var(--main-title-color);
+  font-size: 1.5rem;
+}
+
+.subtitle {
+  color: var(--main-subtitle-color);
+  font-size: 1.25rem;
+}
+
+.text {
+  font-size: 1rem;
+}
+
+a.link {
+  text-decoration: none;
+}
+
+a.link:hover,
+a.link:focus,
+a.link:active {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+}
