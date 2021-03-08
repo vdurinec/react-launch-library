@@ -7,7 +7,7 @@
 }
 
 .select {
-  background-color: #ffffff;
+  background-color: var(--calendar-bg-color);
   width: 260px;
   height: 40px;
   min-height: 40px;
@@ -20,6 +20,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.main {
 }
 
 .value {
@@ -57,16 +60,21 @@
 .options {
   position: absolute;
   width: 260px;
+  max-height: 300px;
+  max-height: 300px;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  border: 1px solid #000000;
-  background-color: #ffffff;
+  border: 1px solid var(--calendar-text-color);
+  background-color: var(--calendar-bg-color);
   transition: height 200ms;
+  z-index: 1;
 }
 
 .open {
   visibility: visible;
   height: 300px;
+  max-height: 300px;
   overflow-y: auto;
 }
 
@@ -79,26 +87,32 @@
   height: fit-content;
   border: none;
   border-radius: 0;
-  background-color: #ffffff;
+  background-color: var(--calendar-bg-color);
   min-height: 40px;
-  height: 40px;
+  height: 50px;
   font-size: 0.9rem;
+  cursor: pointer;
 }
 
 .option:hover,
 .option:focus,
 .option:active {
-  background-color: #f8f8f8;
+  background-color: var(--main-subtitle-color);
+  color: var(--secondary-text-color);
   border-radius: 0;
 }
 
 .selected {
-  background-color: #f6f6f6;
+  background-color: var(--main-title-color);
+  color: var(--secondary-text-color);
 }
 
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
     width: 250px;
+  }
+  .container label {
+    margin-bottom: 8px;
   }
 }

@@ -19,18 +19,10 @@ class ErrorBoundary extends Component {
   }
 
   render() {
-    const { hasError, error, errorInfo } = this.state;
+    const { hasError, error } = this.state;
     if (hasError) {
       // Render custom fallback UI
-      return (
-        <h1>
-          <details style={{ whiteSpace: 'pre-wrap' }}>
-            {error ? error.toString() : 'Something went wrong :/'}
-            <br />
-            {!!Object.keys(errorInfo).length && errorInfo.componentStack()}
-          </details>
-        </h1>
-      );
+      return <h1>{error ? error.toString() : 'Something went wrong :/'}</h1>;
     }
 
     return this.props.children;

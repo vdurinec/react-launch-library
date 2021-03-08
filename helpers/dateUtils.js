@@ -27,7 +27,7 @@ export const getDayIndex = (date) => {
   let day;
 
   if (date) {
-    day = new Date(date);
+    day = new Date(fixDateFormatToFitAllBrowsers(date));
     const dayIndex = day.getDay();
     if (dayIndex === 0) return 6;
 
@@ -44,6 +44,11 @@ export const getDay = (date) => {
   return week[day];
 };
 
+export const getDayOfMonth = (date) => {
+  const day = new Date(fixDateFormatToFitAllBrowsers(date));
+  return day.getUTCDate();
+};
+
 export const getMonthFromNum = (month) => {
   const monthIndex = month - 1;
   return {
@@ -53,7 +58,7 @@ export const getMonthFromNum = (month) => {
 };
 
 export const getMonth = (date) => {
-  const d = date ? new Date(date) : new Date();
+  const d = date ? new Date(fixDateFormatToFitAllBrowsers(date)) : new Date();
   const month = d.getUTCMonth();
   const m = months[month];
 
@@ -64,12 +69,14 @@ export const getMonth = (date) => {
 };
 
 export const getYear = (date) =>
-  date ? new Date(date).getFullYear() : new Date().getFullYear();
+  date
+    ? new Date(fixDateFormatToFitAllBrowsers(date)).getFullYear()
+    : new Date().getFullYear();
 
 export const getDaysInMonth = (month, year) =>
   new Date(year, month, 0).getDate();
 
-export const getWeeksWithDays = (firstDayIndex, totalMonthDays) => {
+export const getWeeksWithDays = (firstDayIndex, totalMonthDays, events) => {
   const monthDays = Array.from({ length: totalMonthDays });
   return monthDays.reduce((days, item, index) => {
     const day = Math.floor(index / 7);
@@ -79,12 +86,13 @@ export const getWeeksWithDays = (firstDayIndex, totalMonthDays) => {
     }
 
     if (index < firstDayIndex) {
-      days[day].push(0); // push "empty" days for first week
+      days[day].push({ day: '', events: [] }); // push "empty" days for first week
       return days;
     }
     const dayItem = index + 1 - firstDayIndex;
+    const dayEvents = events?.filter((event) => event.day === dayItem);
 
-    days[day].push(dayItem);
+    days[day].push({ day: dayItem, events: dayEvents || [] });
 
     return days;
   }, []);
@@ -95,7 +103,19 @@ export const formatTimeDigits = (n) => {
     return '';
   }
 
-  return n < 10 ? `0${n}` : n;
+  // parse to int to avoid double zeroes in front of number
+  return n < 10 ? `0${parseInt(`${n}`, 10)}` : n;
+};
+
+export const displayZeros = (formattedTime) => {
+  const { days, hours, minutes, seconds } = formattedTime;
+
+  return {
+    days,
+    hours: !hours && days ? '00' : hours,
+    minutes: !minutes && (days || hours) ? '00' : minutes,
+    seconds: seconds || '00',
+  };
 };
 
 export const formatCounterTime = (milis) => {
@@ -116,10 +136,19 @@ export const formatCounterTime = (milis) => {
     hours = hours - days * 24;
   }
 
-  return {
+  const formattedTime = {
     days: formatTimeDigits(days),
     hours: formatTimeDigits(hours),
     minutes: formatTimeDigits(minutes),
-    seconds: formatTimeDigits(seconds) || '00',
+    seconds: formatTimeDigits(seconds),
   };
+
+  return displayZeros(formattedTime);
 };
+
+export const formatDate = ({ day, month, year }) => {
+  return `${formatTimeDigits(day)}/${formatTimeDigits(month)}/${year}`;
+};
+
+export const fixDateFormatToFitAllBrowsers = (date) =>
+  date && date.replace(/-/g, '/').replace(/T/, ' ').replace(/Z/, ' -0');

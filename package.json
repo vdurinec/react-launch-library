@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@svgr/webpack": "^5.5.0",
+    "babel-loader": "^8.2.2",
     "next": "10.0.7",
     "node-fetch": "^2.6.1",
     "react": "17.0.1",

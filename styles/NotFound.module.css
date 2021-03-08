@@ -5,14 +5,20 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  color: var(--main-text-color);
 }
 
 .container a {
   text-decoration: none;
+  color: var(--main-title-color);
 }
 
 .container a:hover,
 .container a:active,
 .container a:focus {
   text-decoration: underline;
+}
+
+.container h1 {
+  color: var(--main-title-color);
 }

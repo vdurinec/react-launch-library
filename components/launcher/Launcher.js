@@ -8,7 +8,7 @@ import ThemeSwitch from '../theme-switch';
 import styles from '../../styles/Launcher.module.css';
 
 const Launcher = ({ agencies }) => {
-  const [selectedAgencies, setSelectedAgencies] = useState([121, 44]); // preselect NASA and SpaceX
+  const [selectedAgencies, setSelectedAgencies] = useState([]); // 121, 44 preselect NASA and SpaceX
 
   const handleAgencySelection = (selectedAgency) => {
     const { id } = selectedAgency;
@@ -23,18 +23,22 @@ const Launcher = ({ agencies }) => {
     });
   };
 
-  const agencyOptions = agencies.length
-    ? agencies.reduce(
-        (options, currentAgency) => [
+  const agencyOptions = agencies?.length
+    ? agencies.reduce((options, currentAgency) => {
+        const alreadyExists = options.find(
+          (option) => option.id === currentAgency.id
+        );
+        if (alreadyExists) return options;
+
+        return [
           ...options,
           {
             id: currentAgency.id,
             value: currentAgency.id,
             text: currentAgency.name,
           },
-        ],
-        []
-      )
+        ];
+      }, [])
     : [];
 
   return (
@@ -46,7 +50,7 @@ const Launcher = ({ agencies }) => {
       </p>
       <Select
         id="agency-select"
-        label="Space agencies:"
+        label="Filter by space agencies:"
         value={selectedAgencies}
         options={agencyOptions}
         handleChange={handleAgencySelection}

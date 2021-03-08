@@ -2,7 +2,7 @@
   position: relative;
   align-self: flex-end;
   display: inline-block;
-  width: 50px;
+  width: 40px;
   height: 25px;
   margin: 1rem;
 }
@@ -12,8 +12,8 @@
 .container .switch {
   position: absolute;
   cursor: pointer;
-  background-color: #ccc;
-  border-radius: 25px;
+  background-color: var(--main-subtitle-color);
+  border-radius: 20px;
   top: 0;
   right: 0;
   bottom: 0;
@@ -27,12 +27,12 @@
   top: 2px;
   width: 21px;
   height: 21px;
-  background-color: #aaa;
+  background-color: var(--calendar-bg-color);
   border-radius: 50%;
   transition: transform 0.3s ease;
 }
 .container input[type='checkbox']:checked + .switch::before {
-  transform: translateX(25px);
+  transform: translateX(15px);
   background-color: var(--main-subtitle-color);
 }
 .container input[type='checkbox']:checked + .switch {

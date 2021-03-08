@@ -1,13 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { default as Details } from '../components/details-card';
 
-const data = {
-  id: 'mocked-details',
-  date: '27/12/2021',
-  handleDayClick: jest.fn,
-  testId: 'test-day',
-};
-
 describe('DetailsCard', () => {
   test('renders without crashing', () => {
     render(

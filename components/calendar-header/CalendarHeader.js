@@ -15,18 +15,18 @@ export default function CalendarHeader(props) {
     <div className={styles.container} data-testid={testId}>
       <a
         role="button"
-        className={styles.caret}
+        className={`${styles.caret} ${styles[type]}`}
         onClick={handleCalendarChange(OPERATIONS.sub)}
         data-testid={`test-${type}-prev`}
       >
         &lsaquo;
       </a>
-      <div className={styles.current}>
+      <div className={`${styles.current} ${styles[type]}`}>
         {name} {number && `(${number})`}
       </div>
       <a
         role="button"
-        className={styles.caret}
+        className={`${styles.caret} ${styles[type]}`}
         onClick={handleCalendarChange(OPERATIONS.add)}
         data-testid={`test-${type}-next`}
       >

@@ -3,13 +3,16 @@ import {
   months,
   getDay,
   getDayIndex,
+  getDayOfMonth,
   getMonth,
   getMonthFromNum,
   getYear,
   getDaysInMonth,
   getWeeksWithDays,
   formatTimeDigits,
+  displayZeros,
   formatCounterTime,
+  formatDate,
 } from '../helpers/dateUtils';
 
 describe('date utils', () => {
@@ -39,6 +42,17 @@ describe('date utils', () => {
     expect(getDayIndex('03-05-2021')).toBe(4);
     expect(getDayIndex('05-22-2021')).toBe(5);
     expect(getDayIndex('12-26-2021')).toBe(6);
+  });
+
+  test('getDayOfMonth returns correct day of current month', () => {
+    expect(getDayOfMonth('2019-12-31T00:00:00Z')).toBe(31);
+    expect(getDayOfMonth('2019-12-30T00:00:00Z')).toBe(30);
+    expect(getDayOfMonth('2020-01-14T00:00:00Z')).toBe(14);
+    expect(getDayOfMonth('2020-04-29T00:00:00Z')).toBe(29);
+    expect(getDayOfMonth('2021-02-18T00:00:00Z')).toBe(18);
+    expect(getDayOfMonth('2021-03-05T00:00:00Z')).toBe(5);
+    expect(getDayOfMonth('2021-05-22T00:00:00Z')).toBe(22);
+    expect(getDayOfMonth('2021-12-26T00:00:00Z')).toBe(26);
   });
 
   test('getMonthFromNum returns correct month for given month number', () => {
@@ -104,103 +118,252 @@ describe('date utils', () => {
 
   test('getWeeksWithDays returns correct days in week', () => {
     expect(getWeeksWithDays(0, 15)).toStrictEqual([
-      [1, 2, 3, 4, 5, 6, 7],
-      [8, 9, 10, 11, 12, 13, 14],
-      [15],
+      [
+        { day: 1, events: [] },
+        { day: 2, events: [] },
+        { day: 3, events: [] },
+        { day: 4, events: [] },
+        { day: 5, events: [] },
+        { day: 6, events: [] },
+        { day: 7, events: [] },
+      ],
+      [
+        { day: 8, events: [] },
+        { day: 9, events: [] },
+        { day: 10, events: [] },
+        { day: 11, events: [] },
+        { day: 12, events: [] },
+        { day: 13, events: [] },
+        { day: 14, events: [] },
+      ],
+      [{ day: 15, events: [] }],
     ]);
 
     expect(getWeeksWithDays(1, 13)).toStrictEqual([
-      [0, 1, 2, 3, 4, 5, 6],
-      [7, 8, 9, 10, 11, 12],
+      [
+        { day: '', events: [] },
+        { day: 1, events: [] },
+        { day: 2, events: [] },
+        { day: 3, events: [] },
+        { day: 4, events: [] },
+        { day: 5, events: [] },
+        { day: 6, events: [] },
+      ],
+      [
+        { day: 7, events: [] },
+        { day: 8, events: [] },
+        { day: 9, events: [] },
+        { day: 10, events: [] },
+        { day: 11, events: [] },
+        { day: 12, events: [] },
+      ],
     ]);
 
     expect(getWeeksWithDays(2, 12)).toStrictEqual([
-      [0, 0, 1, 2, 3, 4, 5],
-      [6, 7, 8, 9, 10],
+      [
+        { day: '', events: [] },
+        { day: '', events: [] },
+        { day: 1, events: [] },
+        { day: 2, events: [] },
+        { day: 3, events: [] },
+        { day: 4, events: [] },
+        { day: 5, events: [] },
+      ],
+      [
+        { day: 6, events: [] },
+        { day: 7, events: [] },
+        { day: 8, events: [] },
+        { day: 9, events: [] },
+        { day: 10, events: [] },
+      ],
     ]);
 
     expect(getWeeksWithDays(6, 18)).toStrictEqual([
-      [0, 0, 0, 0, 0, 0, 1],
-      [2, 3, 4, 5, 6, 7, 8],
-      [9, 10, 11, 12],
+      [
+        { day: '', events: [] },
+        { day: '', events: [] },
+        { day: '', events: [] },
+        { day: '', events: [] },
+        { day: '', events: [] },
+        { day: '', events: [] },
+        { day: 1, events: [] },
+      ],
+      [
+        { day: 2, events: [] },
+        { day: 3, events: [] },
+        { day: 4, events: [] },
+        { day: 5, events: [] },
+        { day: 6, events: [] },
+        { day: 7, events: [] },
+        { day: 8, events: [] },
+      ],
+      [
+        { day: 9, events: [] },
+        { day: 10, events: [] },
+        { day: 11, events: [] },
+        { day: 12, events: [] },
+      ],
     ]);
   });
+});
 
-  test('formatTimeDigits places 0 before single digit niumber only', () => {
-    expect(formatTimeDigits(1)).toBe('01');
-    expect(formatTimeDigits(3)).toBe('03');
-    expect(formatTimeDigits(7)).toBe('07');
-    expect(formatTimeDigits(9)).toBe('09');
-    expect(formatTimeDigits(10)).toBe(10);
-    expect(formatTimeDigits(10)).not.toBe('010');
-    expect(formatTimeDigits(25)).toBe(25);
-    expect(formatTimeDigits(25)).not.toBe('025');
-    expect(formatTimeDigits(192)).toBe(192);
-    expect(formatTimeDigits(192)).not.toBe('0192');
+test('formatTimeDigits places 0 before single digit niumber only', () => {
+  expect(formatTimeDigits(1)).toBe('01');
+  expect(formatTimeDigits(3)).toBe('03');
+  expect(formatTimeDigits(7)).toBe('07');
+  expect(formatTimeDigits(9)).toBe('09');
+  expect(formatTimeDigits(10)).toBe(10);
+  expect(formatTimeDigits(10)).not.toBe('010');
+  expect(formatTimeDigits(25)).toBe(25);
+  expect(formatTimeDigits(25)).not.toBe('025');
+  expect(formatTimeDigits(192)).toBe(192);
+  expect(formatTimeDigits(192)).not.toBe('0192');
+});
+
+test('displayZeros will add zeros if higher time unit exist', () => {
+  expect(
+    displayZeros({ days: '', hours: '', minutes: '', seconds: '' })
+  ).toStrictEqual({
+    days: '',
+    hours: '',
+    minutes: '',
+    seconds: '00',
   });
 
-  test('formatCounterTime returns correctly formated time', () => {
-    expect(formatCounterTime(0)).toStrictEqual({
-      days: '',
-      hours: '',
-      minutes: '',
-      seconds: '00',
-    });
-
-    expect(formatCounterTime(13234)).toStrictEqual({
-      days: '',
-      hours: '',
-      minutes: '',
-      seconds: 13,
-    });
-
-    expect(formatCounterTime(13234)).toStrictEqual({
-      days: '',
-      hours: '',
-      minutes: '',
-      seconds: 13,
-    });
-
-    expect(formatCounterTime(229323)).toStrictEqual({
-      days: '',
-      hours: '',
-      minutes: '03',
-      seconds: 49,
-    });
-
-    expect(formatCounterTime(229323)).toStrictEqual({
-      days: '',
-      hours: '',
-      minutes: '03',
-      seconds: 49,
-    });
-
-    expect(formatCounterTime(21222323)).toStrictEqual({
-      days: '',
-      hours: '05',
-      minutes: 53,
-      seconds: 42,
-    });
-
-    expect(formatCounterTime(221222323)).toStrictEqual({
-      days: '02',
-      hours: 13,
-      minutes: 27,
-      seconds: '02',
-    });
-
-    expect(formatCounterTime(687687687)).toStrictEqual({
-      days: '07',
-      hours: 23,
-      minutes: '01',
-      seconds: 27,
-    });
-
-    expect(formatCounterTime(1941222323)).toStrictEqual({
-      days: 22,
-      hours: 11,
-      minutes: 13,
-      seconds: 42,
-    });
+  expect(
+    displayZeros({ days: '', hours: '', minutes: 12, seconds: '' })
+  ).toStrictEqual({
+    days: '',
+    hours: '',
+    minutes: 12,
+    seconds: '00',
   });
+
+  expect(
+    displayZeros({ days: '', hours: 19, minutes: '', seconds: '' })
+  ).toStrictEqual({
+    days: '',
+    hours: 19,
+    minutes: '00',
+    seconds: '00',
+  });
+
+  expect(
+    displayZeros({ days: 10, hours: '', minutes: '', seconds: '' })
+  ).toStrictEqual({
+    days: 10,
+    hours: '00',
+    minutes: '00',
+    seconds: '00',
+  });
+
+  expect(
+    displayZeros({ days: 10, hours: 14, minutes: '', seconds: '' })
+  ).toStrictEqual({
+    days: 10,
+    hours: 14,
+    minutes: '00',
+    seconds: '00',
+  });
+
+  expect(
+    displayZeros({ days: 10, hours: '', minutes: 21, seconds: '' })
+  ).toStrictEqual({
+    days: 10,
+    hours: '00',
+    minutes: 21,
+    seconds: '00',
+  });
+
+  expect(
+    displayZeros({ days: '', hours: 23, minutes: 47, seconds: '' })
+  ).toStrictEqual({
+    days: '',
+    hours: 23,
+    minutes: 47,
+    seconds: '00',
+  });
+});
+
+test('formatCounterTime returns correctly formated time', () => {
+  expect(formatCounterTime(0)).toStrictEqual({
+    days: '',
+    hours: '',
+    minutes: '',
+    seconds: '00',
+  });
+
+  expect(formatCounterTime(13234)).toStrictEqual({
+    days: '',
+    hours: '',
+    minutes: '',
+    seconds: 13,
+  });
+
+  expect(formatCounterTime(13234)).toStrictEqual({
+    days: '',
+    hours: '',
+    minutes: '',
+    seconds: 13,
+  });
+
+  expect(formatCounterTime(229323)).toStrictEqual({
+    days: '',
+    hours: '',
+    minutes: '03',
+    seconds: 49,
+  });
+
+  expect(formatCounterTime(229323)).toStrictEqual({
+    days: '',
+    hours: '',
+    minutes: '03',
+    seconds: 49,
+  });
+
+  expect(formatCounterTime(21222323)).toStrictEqual({
+    days: '',
+    hours: '05',
+    minutes: 53,
+    seconds: 42,
+  });
+
+  expect(formatCounterTime(221222323)).toStrictEqual({
+    days: '02',
+    hours: 13,
+    minutes: 27,
+    seconds: '02',
+  });
+
+  expect(formatCounterTime(687687687)).toStrictEqual({
+    days: '07',
+    hours: 23,
+    minutes: '01',
+    seconds: 27,
+  });
+
+  expect(formatCounterTime(1941222323)).toStrictEqual({
+    days: 22,
+    hours: 11,
+    minutes: 13,
+    seconds: 42,
+  });
+});
+
+test('formatDate returns correctly formated date', () => {
+  expect(formatDate({ day: 17, month: 2, year: 2019 })).toStrictEqual(
+    '17/02/2019'
+  );
+
+  expect(formatDate({ day: 1, month: 7, year: 2019 })).toStrictEqual(
+    '01/07/2019'
+  );
+
+  expect(formatDate({ month: 11, day: 27, year: 2020 })).toStrictEqual(
+    '27/11/2020'
+  );
+
+  expect(formatDate({ year: 2021, month: '09', day: 30 })).toStrictEqual(
+    '30/09/2021'
+  );
 });

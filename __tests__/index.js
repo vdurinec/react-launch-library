@@ -5,7 +5,7 @@ describe('App', () => {
   it('renders without crashing', () => {
     render(<App />);
     expect(
-      screen.getByRole('heading', { children: 'Welcome to React Launcher!' })
+      screen.getByRole('heading', { children: 'React Launcher' })
     ).toBeInTheDocument();
   });
 });
