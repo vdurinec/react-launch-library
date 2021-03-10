@@ -14,7 +14,7 @@ import styles from '../../styles/Calendar.module.css';
 
 function Calendar({ selectedAgencies }) {
   const { baseApiUrl, changeBaseApiUrl } = useContext(BaseApiUrlContext);
-  const [errorText, setErrorText] = useState(false);
+  const [errorText, setErrorText] = useState('');
   const [events, setEvents] = useState([]);
   const [currentMonth, setCurrentMonth] = useState(getMonth());
   const [currentYear, setCurrentYear] = useState(getYear());
