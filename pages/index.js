@@ -55,12 +55,14 @@ function Home({ agencies, error }) {
     <BaseApiUrlContext.Provider value={baseApiUrl}>
       <ThemeContext.Provider value={theme}>
         <div className={`${theme.theme} ${styles.container}`}>
-          <Head>
-            <title>React Launcher</title>
-            <link rel="icon" href="favicon.ico" />
-          </Head>
+          <div className={styles.main}>
+            <Head>
+              <title>React Launcher</title>
+              <link rel="icon" href="favicon.ico" />
+            </Head>
 
-          <Launcher agencies={agenciesData} />
+            <Launcher agencies={agenciesData} />
+          </div>
         </div>
       </ThemeContext.Provider>
     </BaseApiUrlContext.Provider>

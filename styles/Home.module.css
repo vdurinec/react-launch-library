@@ -1,11 +1,6 @@
 .container {
   min-height: 100vh;
   min-width: 100vw;
-  padding: 0 0.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   color: var(--main-text-color);
   background-color: var(--main-bg-color);
   background: linear-gradient(
@@ -16,8 +11,7 @@
 }
 
 .main {
-  padding: 3rem 0;
-  flex: 1;
+  margin: 0 0.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;

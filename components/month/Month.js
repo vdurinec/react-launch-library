@@ -18,7 +18,7 @@ import ClientOnly from '../client-only';
 import Counter from '../counter';
 import styles from '../../styles/Month.module.css';
 
-export default function Month({ month, year, events, isLoading }) {
+export default function Month({ month, year, events }) {
   const [portal, setPortal] = useState('');
   const firstDayIndex = getDayIndex(`${year}-${month}-01T00:00:00Z`);
   const totalMonthDays = getDaysInMonth(month, year) + firstDayIndex;
@@ -96,13 +96,6 @@ export default function Month({ month, year, events, isLoading }) {
       </Fragment>
     ));
 
-  if (isLoading)
-    return (
-      <div className={styles.container} data-testid="test-month">
-        <p>Almost there! Please wait a bit more for launcing!</p>
-      </div>
-    );
-
   return (
     <div className={styles.container} data-testid="test-month">
       <WeekDayNames />
@@ -118,7 +111,6 @@ export default function Month({ month, year, events, isLoading }) {
 }
 
 Month.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
   month: PropTypes.number.isRequired,
   year: PropTypes.number.isRequired,
   events: PropTypes.arrayOf(

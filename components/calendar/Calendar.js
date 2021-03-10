@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import { BaseApiUrlContext, API_DEV_URL } from '../../context/BaseApiUrl';
@@ -8,45 +8,40 @@ import { getFullData } from '../../helpers/requestHandler';
 import { mapLaunchEvents } from '../../helpers/dataMapper';
 import { OPERATORS } from '../../helpers/general';
 import Month from '../month';
+import Loader from '../Loader';
 import ErrorWithFallback from '../error-with-fallback';
 import styles from '../../styles/Calendar.module.css';
 
 function Calendar({ selectedAgencies }) {
   const { baseApiUrl, changeBaseApiUrl } = useContext(BaseApiUrlContext);
-  const [errorText, setErrorText] = useState('');
+  const [errorText, setErrorText] = useState(false);
   const [events, setEvents] = useState([]);
   const [currentMonth, setCurrentMonth] = useState(getMonth());
   const [currentYear, setCurrentYear] = useState(getYear());
   const [month, setMonth] = useState(currentMonth.number);
   const [relevantEvents, setRelevantEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const apiUrl = baseApiUrl;
+
+  const getEvents = useCallback(async () => {
+    setIsLoading(true);
+    const response = await getFullData(
+      `${baseApiUrl}/event/?limit=100&offset=0`
+    );
+
+    /* otherwise remap events data and take only what is used */
+    const eventsData = response?.results?.length
+      ? mapLaunchEvents(response.results)
+      : [];
+
+    setEvents(eventsData);
+    setErrorText('');
+    setIsLoading(false);
+  }, [baseApiUrl]);
 
   /* fetch data in componentDidMount lifecycle only */
   useEffect(() => {
-    async function getEvents() {
-      /* take base API URL from context, so if parent component uses dev, use it here as well*/
-      const response = await getFullData(`${apiUrl}/event/?limit=100&offset=0`);
-
-      /* if there's response.detail, it's an error */
-      if (response.detail) {
-        setErrorText(response.detail);
-        setIsLoading(false);
-        return;
-      }
-
-      /* otherwise remap events data and take only what is used */
-      const eventsData = response?.results?.length
-        ? mapLaunchEvents(response.results)
-        : [];
-
-      setEvents(eventsData);
-      setIsLoading(false);
-      setErrorText('');
-    }
-
     getEvents();
-  }, []);
+  }, [getEvents]);
 
   /* update relevant events on each events, month or year change */
   useEffect(() => {
@@ -102,21 +97,9 @@ function Calendar({ selectedAgencies }) {
     });
   };
 
-  const handleEventsFallback = async () => {
-    setIsLoading(true);
+  const handleEventsFallback = () => {
     changeBaseApiUrl(API_DEV_URL);
-    const response = await getFullData(
-      `${API_DEV_URL}/event/?limit=100&offset=0`
-    );
-
-    /* otherwise remap events data and take only what is used */
-    const eventsData = response?.results?.length
-      ? mapLaunchEvents(response.results)
-      : [];
-
-    setEvents(eventsData);
-    setErrorText('');
-    setIsLoading(false);
+    getEvents();
   };
 
   if (errorText) {
@@ -127,6 +110,14 @@ function Calendar({ selectedAgencies }) {
       />
     );
   }
+
+  if (isLoading)
+    return (
+      <div className={styles.container} data-testid="test-month">
+        <p>Almost there! Please wait a bit more for launching!</p>
+        <Loader />
+      </div>
+    );
 
   return (
     <div className={styles.container}>

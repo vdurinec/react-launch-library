@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-import ErrorPage from '../../pages/error';
+import ErrorPage from '../error';
 
 const ErrorWithFallback = ({ error, handleFallback }) => (
   <ErrorPage error={error}>

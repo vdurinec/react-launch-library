@@ -54,6 +54,7 @@ const Launcher = ({ agencies }) => {
         value={selectedAgencies}
         options={agencyOptions}
         handleChange={handleAgencySelection}
+        className={styles.select}
         multiple
       />
 
